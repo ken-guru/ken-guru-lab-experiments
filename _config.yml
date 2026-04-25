@@ -1,0 +1,12 @@
+title: ken-guru / lab
+description: Lab experiments in AI-assisted development
+url: ""
+baseurl: ""
+
+markdown: kramdown
+permalink: pretty
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor

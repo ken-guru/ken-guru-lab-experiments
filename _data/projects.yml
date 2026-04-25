@@ -1,0 +1,297 @@
+- id: timely
+  num: "001"
+  name: Mr. Timely
+  tagline: Activity Session Timer
+  desc: >
+    Plan a fixed block of time, add named activities, and let the timer guide you through each one.
+    Features an AI session planner and shareable session summaries.
+  longDesc: >
+    Set a duration or a deadline, then break the time into named activities. A live progress bar shows
+    how deep into the session you are. When the session ends, get a full summary of how time was actually
+    spent — and share it as a permanent public URL. An optional AI planner (BYOK) will suggest a session
+    structure given a goal.
+  accent: "#1d4ed8"
+  accentLight: "#3b82f6"
+  url: https://mr-timely.paulsennet.no/
+  github: https://github.com/ken-guru/github-copilot-agent-assisted-next-app
+  tags:
+    - Next.js
+    - TypeScript
+    - Tailwind CSS
+    - OpenAI
+  status: published
+  features:
+    - Duration or deadline mode
+    - Named activity list with time budgets
+    - Live progress visualisation
+    - AI session planner (bring your own key)
+    - Shareable session summary pages
+  stack:
+    - name: Next.js 14
+      role: Framework
+      note: App Router with server actions for OpenAI calls
+    - name: TypeScript
+      role: Language
+      note: "Strict mode throughout; types co-located with components"
+    - name: Tailwind CSS
+      role: Styling
+      note: "Utility-first; dark mode via class strategy"
+    - name: OpenAI API
+      role: AI planner
+      note: GPT-4o structured output for session suggestions
+    - name: localStorage
+      role: Persistence
+      note: "Session state survives refresh; no backend required"
+  architecture: >
+    A fully client-rendered SPA hosted on Vercel. Session state lives in localStorage — no user accounts,
+    no database. The AI planner calls OpenAI via a Next.js server action so the API key never touches the
+    client. Completed sessions are serialised and encoded in a shareable URL.
+  devNotes:
+    - >
+      This was my first project built with GitHub Copilot as a constant pair. The biggest surprise: Copilot
+      was excellent at generating TypeScript interfaces and repetitive component scaffolding, but consistently
+      suggested overly complex state management. I ended up simplifying most of its suggestions.
+    - >
+      The shareable URL feature was almost entirely Copilot-written — it suggested the pattern, generated
+      the encode/decode logic, and handled edge cases I hadn't considered. That felt like genuine leverage.
+    - >
+      The AI session planner took longer than expected. Structured output from GPT-4o is reliable, but prompt
+      engineering to get sensibly scoped suggestions took several iterations. The model tends toward optimistic
+      time estimates.
+  screenshots:
+    - label: Set up session
+      desc: Duration or deadline picker
+      image: /assets/images/timely-setup.jpg
+    - label: Add activities
+      desc: Build the activity list
+    - label: Timer running
+      desc: Live progress view
+      image: /assets/images/timely-running.jpg
+    - label: Session summary
+      desc: Time breakdown + share link
+      image: /assets/images/timely-summary.jpg
+
+- id: brewlog
+  num: "002"
+  name: BrewLog
+  tagline: Coffee Brewing Journal
+  desc: >
+    Track every brew session — beans, method, grind, ratio, brew time. Share sessions with the community
+    and build a personal taste profile over time.
+  longDesc: >
+    A mobile-first PWA for coffee enthusiasts who want to remember what made a particular brew great.
+    Log your beans, brewing method, grind coarseness, water temperature, and brew time. Rate each session,
+    leave tasting notes, and explore what the community is brewing. The app works offline and installs
+    like a native app.
+  accent: "#c2410c"
+  accentLight: "#f97316"
+  url: https://brew-log.paulsennet.no/
+  github: https://github.com/ken-guru/personal-coffee-brewing-reporting
+  tags:
+    - React
+    - Supabase
+    - PWA
+    - Vite
+  status: published
+  features:
+    - Multi-step brew logging wizard
+    - Community brew feed with filtering
+    - Star ratings and tasting notes
+    - Offline support via service worker
+    - Light / dark mode
+    - Installable as a PWA
+  stack:
+    - name: React 18
+      role: Framework
+      note: "Functional components; Context for global state"
+    - name: Supabase
+      role: Backend
+      note: "Postgres database, auth, row-level security, realtime feed"
+    - name: Vite
+      role: Build tool
+      note: Fast HMR during dev; PWA plugin for service worker
+    - name: Workbox
+      role: Offline
+      note: "Cache-first for static assets; network-first for API"
+  architecture: >
+    Client-rendered React SPA backed by Supabase. Authentication is handled by Supabase Auth
+    (email/password). All brew data is stored in Postgres with row-level security — each user can only
+    modify their own records. The community feed is a public view. The service worker caches assets and
+    queues offline brew submissions.
+  devNotes:
+    - >
+      BrewLog was where I first noticed that AI tools have a strong prior toward popular patterns. Every
+      suggestion for the Supabase integration was textbook — which was great for getting started, but led
+      to a schema that needed significant restructuring when the community feed requirements became clear.
+    - >
+      The multi-step form wizard was almost entirely designed by hand. The AI kept suggesting single-page
+      forms with validation, missing the UX point entirely. The step-by-step flow required clear human
+      intentionality.
+    - >
+      PWA setup (service worker strategy, manifest) was one area where AI genuinely saved hours. The
+      offline queueing logic was generated in one shot and worked on the first test.
+  screenshots:
+    - label: My brews
+      desc: Personal brew history
+      image: /assets/images/brewlog-mybrews.jpg
+    - label: Log a brew
+      desc: Multi-step entry wizard
+      image: /assets/images/brewlog-log.jpg
+    - label: Brew detail
+      desc: Full session view
+      image: /assets/images/brewlog-brew.jpg
+    - label: Community
+      desc: Public brew feed
+      image: /assets/images/brewlog-community.jpg
+
+- id: rustycity
+  num: "003"
+  name: Rusty City
+  tagline: Terminal City Building Simulator
+  desc: >
+    A city building simulation written in Rust, rendered entirely in the terminal. Manage budgets,
+    bus routes, citizens and city policies. Watch your city grow — day by day, event by event.
+  longDesc: >
+    Rusty City is a desktop city sim with no game engine — just Rust, a TUI library, and a lot of
+    simulation logic. Citizens are born, find work, commute by bus, raise families, and eventually die.
+    You build roads, homes, offices and shops; bus routes emerge from connections you draw between
+    buildings. Random events — heat waves, economic booms, residents moving away — force policy decisions
+    with real trade-offs.
+  accent: "#3f6212"
+  accentLight: "#84cc16"
+  url: null
+  github: https://github.com/ken-guru/rusty-city-simulator
+  tags:
+    - Rust
+    - Ratatui
+    - TUI
+    - Simulation
+  status: in development
+  features:
+    - "Citizen lifecycle: birth, employment, commuting, ageing, death"
+    - Bus route network built by connecting buildings
+    - Budget, income and economic simulation
+    - City policy system with trade-offs
+    - "Random events (weather, economic shifts, population moves)"
+    - Save / load game state
+    - "History, news, and stats panels"
+  stack:
+    - name: Rust
+      role: Language
+      note: "Systems language; strict memory safety without GC"
+    - name: Ratatui
+      role: TUI framework
+      note: Terminal UI with widget layout system
+    - name: Serde
+      role: Serialisation
+      note: "Save/load via JSON; easy to extend with new fields"
+    - name: Crossterm
+      role: Terminal events
+      note: Keyboard input and terminal control across platforms
+  architecture: >
+    An event-driven simulation loop: each tick advances the simulation clock, processes citizen actions,
+    evaluates random events, and redraws the TUI. Citizens are stored as a flat Vec with indices used
+    as IDs — a simple ECS-adjacent approach that avoids Rust lifetime headaches. The map is a 2D grid;
+    bus routing is computed as BFS over the road graph.
+  devNotes:
+    - >
+      This was the most technically challenging project — Rust's borrow checker is unforgiving, and the
+      AI (GitHub Copilot + Claude) was genuinely useful here. When I was stuck on lifetime errors, asking
+      the AI to explain why the borrow was invalid was more useful than asking it to fix the code.
+    - >
+      The simulation logic — citizen decision-making, bus routing, event probability curves — was designed
+      entirely by hand. The AI had no useful prior here; it kept suggesting object-oriented patterns that
+      don't translate to idiomatic Rust.
+    - >
+      Ratatui's layout system clicked quickly with AI help. Widget composition felt similar to React, and
+      Copilot's suggestions for the stats panels and the history log were solid first drafts that needed
+      only minor adjustment.
+  screenshots:
+    - label: Main menu
+      desc: City name entry and new/load game
+      image: /assets/images/rustycity-main-menu.png
+    - label: Early city
+      desc: Small grid, first buildings and roads
+      image: /assets/images/rustycity-early-city.png
+    - label: Growing city
+      desc: Bus routes emerging, population rising
+      image: /assets/images/rustycity-growing-city.png
+    - label: Random event
+      desc: Heat wave policy decision
+      image: /assets/images/rustycity-random-event.png
+    - label: Late game
+      desc: "Dense network, day 120+"
+      image: /assets/images/rustycity-late-game.png
+
+- id: snake
+  num: "004"
+  name: Words Are Snake
+  tagline: Word-Steered Snake Game
+  desc: >
+    Type words to steer a snake across a grid. Each letter moves the snake one step. Longer words
+    cover more ground. Daily challenges, AI duel mode, and leaderboards.
+  longDesc: >
+    A word game with a twist: the letters in your typed word steer the snake — U goes up, D goes down,
+    L goes left, R goes right. Eat fruit to score, avoid walls and your own tail. A daily shared board
+    lets everyone compare scores on a leaderboard. In duel mode you race an AI opponent that plays
+    optimal words.
+  accent: "#be123c"
+  accentLight: "#f43f5e"
+  url: https://wordsaresnake.no/
+  github: https://github.com/ken-guru/the-words-are-snake
+  tags:
+    - React
+    - TypeScript
+    - Vite
+    - i18n
+  status: published
+  features:
+    - Word-steered snake movement (U/D/L/R letters)
+    - Daily challenge with shared seed (same board for everyone)
+    - Leaderboard with daily rankings
+    - AI duel mode
+    - English and Norwegian word validation
+    - "Responsive canvas, works on mobile"
+  stack:
+    - name: React 18
+      role: Framework
+      note: "Game state in useReducer; canvas for the grid"
+    - name: TypeScript
+      role: Language
+      note: Strict types for game state transitions
+    - name: Vite
+      role: Build tool
+      note: "Fast builds; custom plugin for dictionary bundling"
+    - name: i18next
+      role: Localisation
+      note: EN and NO dictionary support; UI strings translated
+  architecture: >
+    A React app with game logic in a useReducer. The snake grid is rendered to an HTML5 canvas for
+    performance. The daily seed is derived from the date — same for all players, no server required.
+    Word validation runs client-side against bundled dictionary files (split by language). The leaderboard
+    is stored in Supabase.
+  devNotes:
+    - >
+      The core mechanic — mapping word letters to directional movement — was the fun part, and it was
+      designed by hand. The AI had no useful intuition for game feel; every suggestion made the rules
+      more complex rather than more fun.
+    - >
+      Word validation was an interesting challenge. The AI generated a working trie-based lookup in
+      minutes, but the dictionary bundling (splitting by language, handling special Norwegian characters)
+      required careful human attention.
+    - >
+      The AI was most useful for the leaderboard UI — table sorting, date formatting, mobile layout —
+      and for the i18n wiring. Entirely unremarkable work that would have been tedious to write from
+      scratch.
+  screenshots:
+    - label: Start screen
+      desc: Daily challenge or duel mode
+      image: /assets/images/snake-start.jpg
+    - label: In game
+      desc: "Snake mid-session, word input"
+      image: /assets/images/snake-ingame.jpg
+    - label: Word entry
+      desc: Typing to steer the snake
+    - label: Leaderboard
+      desc: Daily rankings
+      image: /assets/images/snake-leaderboard.jpg
