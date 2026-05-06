@@ -10,3 +10,4 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - vendor
+\ncloudflare_analytics_token: "a319a53ebf89412687c4d3d1f01b9fa1"
