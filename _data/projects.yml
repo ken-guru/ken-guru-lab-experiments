@@ -284,14 +284,21 @@
       and for the i18n wiring. Entirely unremarkable work that would have been tedious to write from
       scratch.
   screenshots:
-    - label: Start screen
-      desc: Daily challenge or duel mode
-      image: /assets/images/snake-start.jpg
-    - label: In game
-      desc: "Snake mid-session, word input"
-      image: /assets/images/snake-ingame.jpg
-    - label: Word entry
-      desc: Typing to steer the snake
+    - label: Daily challenge
+      desc: Snake mid-session with eaten fruit
+      image: /assets/images/snake-daily-light-desktop.png
+    - label: Dark theme
+      desc: Dark theme variant of the daily game
+      image: /assets/images/snake-daily-dark-desktop.png
+    - label: Game over
+      desc: Score submission after reaching the word limit
+      image: /assets/images/snake-submission-light-desktop.png
+    - label: Duel mode
+      desc: Player vs AI opponent on a shared board
+      image: /assets/images/snake-duel-dark-desktop.png
+    - label: Settings
+      desc: Theme, accessibility, and notification options
+      image: /assets/images/snake-settings-dark-desktop.png
     - label: Leaderboard
-      desc: Daily rankings
+      desc: Daily rankings with top scores
       image: /assets/images/snake-leaderboard.jpg
