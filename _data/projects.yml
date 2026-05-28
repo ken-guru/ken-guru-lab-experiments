@@ -302,3 +302,77 @@
     - label: Leaderboard
       desc: Daily rankings with top scores
       image: /assets/images/snake-leaderboard.jpg
+
+- id: skills
+  num: "005"
+  name: Skills
+  tagline: Agent Skills for Technical Presentations
+  desc: >
+    A collection of installable agent skills that guide an AI through the full process of building
+    a technical presentation — from discovering requirements to generating final slides.
+  longDesc: >
+    Skills is a repository of reusable AI agent skills focused on the craft of building technical
+    presentations. An orchestrator skill detects what phase a project is in and guides through the
+    next step; phase skills can also be invoked individually. The project is an experiment in making
+    AI-assisted workflows portable, composable, and predictable across sessions.
+  accent: "#6d28d9"
+  accentLight: "#8b5cf6"
+  url: null
+  github: https://github.com/ken-guru/skills
+  tags:
+    - Agent skills
+    - Markdown
+    - CLI
+    - AI workflows
+  status: in development
+  features:
+    - Orchestrator skill that detects project state and routes to the next phase
+    - "Discovery: gather topic, audience, duration, language, occasion"
+    - "Agenda: build and iterate AGENDA.md with the user"
+    - "Generation: produce PRESENTASJON.md and PRESENTASJON.html from an approved agenda"
+    - Shared validation and state-schema modules used across skills
+    - Installable via npx — portable across projects and sessions
+  stack:
+    - name: Skill packaging
+      role: Distribution
+      note: "Installable via `npx skills@latest add ken-guru/skills/<skill-name>`"
+    - name: Markdown
+      role: Skill definition
+      note: Each skill is a SKILL.md — plain prose instructions the agent reads
+    - name: State schema
+      role: Persistence
+      note: "DISCOVERY.json, PROJECT.json, AGENDA.md define handoff between phases"
+    - name: Shared modules
+      role: Reuse
+      note: Validation and schema extracted to shared/ so phase skills stay focused
+  architecture: >
+    Each skill is a Markdown document that an AI agent reads and follows. The orchestrator
+    (build-presentation) inspects the project directory, detects what state the work is in —
+    no discovery yet? agenda not approved? slides ready? — and invokes the appropriate phase skill.
+    Phase skills can also be run directly when the user knows exactly where they are. State lives
+    in plain files: DISCOVERY.json captures requirements, AGENDA.md holds the structure, and shared
+    modules enforce a common schema across skills.
+  devNotes:
+    - >
+      This project came from frustration. Every time I built a technical presentation with AI help,
+      I was retracing the same steps — explaining context, defending choices, recovering from drift.
+      Skills is an attempt to encode that process so the agent has a script to follow, not a tabula
+      rasa each time.
+    - >
+      The orchestrator pattern was the breakthrough. Letting one skill detect state and route to the
+      right phase skill means the user can drop in at any point and the agent knows what to do next.
+      It also makes each phase skill simpler — they only have to do one thing well.
+    - >
+      Writing skills is more like writing a runbook than writing code. The hardest part is being
+      explicit about decisions that humans make implicitly: what counts as "done" for discovery?
+      When is an agenda ready to generate from? Each ambiguity in the prose surfaces as agent drift
+      in practice.
+  screenshots:
+    - label: Repo overview
+      desc: README with skill index
+    - label: Orchestrator skill
+      desc: build-presentation SKILL.md
+    - label: Discovery in progress
+      desc: Agent collecting requirements
+    - label: Generated presentation
+      desc: PRESENTASJON.html output
