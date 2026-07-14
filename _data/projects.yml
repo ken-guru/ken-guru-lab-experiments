@@ -238,7 +238,6 @@
   accent: "#be123c"
   accentLight: "#f43f5e"
   url: https://wordsaresnake.no/
-  github: https://github.com/ken-guru/the-words-are-snake
   tags:
     - React
     - TypeScript
@@ -376,3 +375,24 @@
       desc: Agent collecting requirements
     - label: Generated presentation
       desc: PRESENTASJON.html output
+
+- id: words-are-snake-devlog
+  num: "006"
+  name: Words Are Snake Devlog
+  tagline: Building a Word Game with AI
+  desc: >
+    A developer blog following the making of Words Are Snake: the problems encountered, the tools used,
+    and what years of experimenting with generative AI coding tools taught along the way.
+  longDesc: >
+    The companion developer blog for Words Are Snake. It documents how the game came to be, the challenges
+    met and overcome, and the evolving role generative AI coding tools played throughout its development.
+  accent: "#0f766e"
+  accentLight: "#14b8a6"
+  url: https://blog.wordsaresnake.no/
+  urlLabel: Visit the blog
+  companionProjectId: snake
+  tags:
+    - Developer blog
+    - Game development
+    - Generative AI
+  status: published
