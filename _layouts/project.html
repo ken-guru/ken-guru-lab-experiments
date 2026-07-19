@@ -3,6 +3,7 @@ layout: default
 ---
 {% assign p = site.data.projects | where: "id", page.project_id | first %}
 {% assign next_p = site.data.projects | where: "id", page.next_project_id | first %}
+{% assign companion_p = site.data.projects | where: "id", p.companionProjectId | first %}
 
 <div style="--accent: {{ p.accent }};">
 
@@ -35,7 +36,7 @@ layout: default
     <div class="detail-hero__actions">
       {% if p.url %}
         <a href="{{ p.url }}" target="_blank" rel="noopener noreferrer" class="btn-primary">
-          <span>Visit app</span>
+          <span>{{ p.urlLabel | default: "Visit app" }}</span>
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12L12 4"/><path d="M6 4h6v6"/></svg>
         </a>
       {% endif %}
@@ -51,34 +52,56 @@ layout: default
   <!-- LEAD BAND -->
   <div class="lead-band">
     <p class="lead-band__text">{{ p.longDesc }}</p>
+    {% if companion_p %}
+      <p class="lead-band__relationship">A companion project to <a href="{{ '/projects/' | append: companion_p.id | append: '/' | relative_url }}">{{ companion_p.name }}</a>.</p>
+    {% endif %}
   </div>
+
+  <!-- FEATURED POSTS -->
+  {% if p.featuredPosts %}
+    <div class="section">
+      <div class="section-label">Featured posts</div>
+      <div class="feature-list-detail">
+        {% for post in p.featuredPosts %}
+          <div class="feature-item">
+            <span class="feature-item__dot"></span>
+            <a href="{{ post.url }}" target="_blank" rel="noopener noreferrer" class="feature-item__text feature-item__link">{{ post.title }}</a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
 
   <!-- SCREENSHOTS -->
-  <div class="section">
-    <div class="section-label">Screenshots</div>
-    <div class="screenshots-scroll">
-      {% for screenshot in p.screenshots %}
-        <div class="screenshot-item{% if p.id == 'rustycity' %} screenshot-item--wide{% endif %}">
-          {% if screenshot.image %}
-            <img src="{{ screenshot.image | relative_url }}" alt="{{ screenshot.label }}" class="screenshot-img" />
-          {% else %}
-            <div class="screenshot-placeholder{% if p.id == 'rustycity' %} screenshot-placeholder--landscape{% else %} screenshot-placeholder--portrait{% endif %}">
-              <div class="screenshot-icon">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1" y="1" width="12" height="10" rx="1.5"/><path d="M1 8l3-3 2 2 3-3 4 4"/></svg>
+  {% if p.screenshots %}
+    <div class="section">
+      <div class="section-label">Screenshots</div>
+      <div class="screenshots-scroll">
+        {% for screenshot in p.screenshots %}
+          <div class="screenshot-item{% if p.id == 'rustycity' %} screenshot-item--wide{% endif %}">
+            {% if screenshot.image %}
+              <img src="{{ screenshot.image | relative_url }}" alt="{{ screenshot.label }}" class="screenshot-img" />
+            {% else %}
+              <div class="screenshot-placeholder{% if p.id == 'rustycity' %} screenshot-placeholder--landscape{% else %} screenshot-placeholder--portrait{% endif %}">
+                <div class="screenshot-icon">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="1" y="1" width="12" height="10" rx="1.5"/><path d="M1 8l3-3 2 2 3-3 4 4"/></svg>
+                </div>
+                <div class="screenshot-caption">{{ screenshot.desc }}</div>
               </div>
-              <div class="screenshot-caption">{{ screenshot.desc }}</div>
-            </div>
-          {% endif %}
-          <div class="screenshot-label">{{ screenshot.label }}</div>
-        </div>
-      {% endfor %}
+            {% endif %}
+            <div class="screenshot-label">{{ screenshot.label }}</div>
+          </div>
+        {% endfor %}
+      </div>
     </div>
-  </div>
+  {% endif %}
 
   <!-- FEATURES + STACK -->
-  <div class="section">
-    <div class="features-stack">
-      <div>
+  {% if p.features or p.stack %}
+    <div class="section">
+      <div class="features-stack">
+        {% if p.features %}
+          <div>
         <div class="section-label">Features</div>
         <div class="feature-list-detail">
           {% for feature in p.features %}
@@ -88,37 +111,45 @@ layout: default
             </div>
           {% endfor %}
         </div>
-      </div>
-      <div>
-        <div class="section-label">Tech stack</div>
-        {% for item in p.stack %}
-          <div class="stack-card">
-            <div class="stack-card__header">
-              <span class="stack-card__name">{{ item.name }}</span>
-              <span class="stack-card__role">{{ item.role }}</span>
-            </div>
-            <div class="stack-card__note">{{ item.note }}</div>
           </div>
+        {% endif %}
+        {% if p.stack %}
+          <div>
+            <div class="section-label">Tech stack</div>
+            {% for item in p.stack %}
+              <div class="stack-card">
+                <div class="stack-card__header">
+                  <span class="stack-card__name">{{ item.name }}</span>
+                  <span class="stack-card__role">{{ item.role }}</span>
+                </div>
+                <div class="stack-card__note">{{ item.note }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  {% endif %}
+
+  <!-- ARCHITECTURE -->
+  {% if p.architecture %}
+    <div class="section">
+      <div class="section-label">Architecture</div>
+      <p class="architecture-text">{{ p.architecture }}</p>
+    </div>
+  {% endif %}
+
+  <!-- DEV NOTES -->
+  {% if p.devNotes %}
+    <div class="section">
+      <div class="section-label">Developer notes</div>
+      <div class="dev-notes">
+        {% for note in p.devNotes %}
+          <p class="dev-note">{{ note }}</p>
         {% endfor %}
       </div>
     </div>
-  </div>
-
-  <!-- ARCHITECTURE -->
-  <div class="section">
-    <div class="section-label">Architecture</div>
-    <p class="architecture-text">{{ p.architecture }}</p>
-  </div>
-
-  <!-- DEV NOTES -->
-  <div class="section">
-    <div class="section-label">Developer notes</div>
-    <div class="dev-notes">
-      {% for note in p.devNotes %}
-        <p class="dev-note">{{ note }}</p>
-      {% endfor %}
-    </div>
-  </div>
+  {% endif %}
 
   <!-- NEXT PROJECT -->
   <div class="next-project">

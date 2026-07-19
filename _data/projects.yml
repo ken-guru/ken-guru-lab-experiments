@@ -228,61 +228,74 @@
   name: Words Are Snake
   tagline: Word-Steered Snake Game
   desc: >
-    Type words to steer a snake across a grid. Each letter moves the snake one step. Longer words
-    cover more ground. Daily challenges, AI duel mode, and leaderboards.
+    Type words to steer a snake across a grid — each letter is a step, direction letters turn it.
+    Daily challenges, AI and PvP duels, and a leaderboard for every mode.
   longDesc: >
     A word game with a twist: the letters in your typed word steer the snake — U goes up, D goes down,
-    L goes left, R goes right. Eat fruit to score, avoid walls and your own tail. A daily shared board
-    lets everyone compare scores on a leaderboard. In duel mode you race an AI opponent that plays
-    optimal words.
+    L goes left, R goes right. Chain combos to spawn bonus fruit and score. A daily shared board resets
+    at Oslo midnight and lets everyone compare scores on a leaderboard, with optional push notifications
+    for players who want a reminder. Duel mode pits you against an AI opponent or, in PvP, another player
+    over an invite link — the server is the sole authority on PvP state, so neither client can influence
+    the result.
   accent: "#be123c"
   accentLight: "#f43f5e"
   url: https://wordsaresnake.no/
-  github: https://github.com/ken-guru/the-words-are-snake
+  companionProjectId: words-are-snake-devlog
   tags:
-    - React
+    - SvelteKit
+    - Svelte 5
     - TypeScript
-    - Vite
+    - PostgreSQL
     - i18n
   status: published
   features:
-    - Word-steered snake movement (U/D/L/R letters)
-    - Daily challenge with shared seed (same board for everyone)
-    - Leaderboard with daily rankings
-    - AI duel mode
-    - English and Norwegian word validation
-    - "Responsive canvas, works on mobile"
+    - Word-steered snake movement with combo scoring (palindromes, alphabetical streaks, triple turns, and more)
+    - Daily challenge with an Oslo-midnight reset, streaks, and opt-in push reminders
+    - AI duel and PvP duel — PvP is fully server-authoritative, joined via invite link or QR code
+    - Word preview assist in AI duel — see your snake's projected path before you submit
+    - Shareable recap image after every game, with rank and real fruit icons
+    - Full English and Norwegian (Bokmål) support, including separate letter-rarity and combo tables
   stack:
-    - name: React 18
+    - name: SvelteKit 2
       role: Framework
-      note: "Game state in useReducer; canvas for the grid"
+      note: "SSR + API routes in one app; strict layer boundaries — components never touch the engine or DB directly"
+    - name: Svelte 5
+      role: UI reactivity
+      note: "Runes-based stores wrap a pure, dependency-free TypeScript engine"
     - name: TypeScript
       role: Language
-      note: Strict types for game state transitions
-    - name: Vite
-      role: Build tool
-      note: "Fast builds; custom plugin for dictionary bundling"
-    - name: i18next
-      role: Localisation
-      note: EN and NO dictionary support; UI strings translated
+      note: Strict mode throughout
+    - name: Drizzle ORM + PostgreSQL
+      role: Database
+      note: "Leaderboards, PvP game state, push subscriptions"
+    - name: Railway
+      role: Hosting
+      note: "App, Postgres, and a small scheduled service that dispatches push notifications"
   architecture: >
-    A React app with game logic in a useReducer. The snake grid is rendered to an HTML5 canvas for
-    performance. The daily seed is derived from the date — same for all players, no server required.
-    Word validation runs client-side against bundled dictionary files (split by language). The leaderboard
-    is stored in Supabase.
+    A SvelteKit app split into four strict layers: Svelte components never touch game logic directly,
+    reactive stores wrap a pure, dependency-free TypeScript engine (movement, collisions, combos, scoring),
+    and only server routes touch PostgreSQL via Drizzle. Daily and AI-duel games run entirely client-side;
+    PvP duel is the exception — the engine runs server-side and the server is the sole authority over
+    state, so neither player's client can influence the result. A small scheduled Railway service
+    dispatches web push notifications on an hourly cron, working around the platform's scheduler only
+    being able to run a command, not call a URL.
   devNotes:
     - >
-      The core mechanic — mapping word letters to directional movement — was the fun part, and it was
-      designed by hand. The AI had no useful intuition for game feel; every suggestion made the rules
-      more complex rather than more fun.
+      The stack didn't survive contact with duel mode. What started as a React/Vite prototype with
+      Supabase for the leaderboard got rebuilt on SvelteKit and Postgres once PvP needed a server that
+      could be the sole authority over game state — a two-player game can't trust either client's copy
+      of the board.
     - >
-      Word validation was an interesting challenge. The AI generated a working trie-based lookup in
-      minutes, but the dictionary bundling (splitting by language, handling special Norwegian characters)
-      required careful human attention.
+      PvP duel was the hardest design problem in the whole project: two browsers, a server-sent-event
+      stream instead of polling, a canonical game state expressed from the host's perspective and
+      re-mirrored for the guest, and a turn-timeout/fallback-word system that had to feel fair rather
+      than punitive. None of that came from AI suggestions — it needed hand-drawn state diagrams before
+      any code got written.
     - >
-      The AI was most useful for the leaderboard UI — table sorting, date formatting, mobile layout —
-      and for the i18n wiring. Entirely unremarkable work that would have been tedious to write from
-      scratch.
+      Where AI genuinely helped: the daily-rhythm work (Oslo-midnight resets, a countdown instead of a
+      dead end, push notifications dispatched through a scheduled service) and the shareable recap image
+      — an OG-style canvas render with real fruit icons and rank — were both areas where the first-pass
+      suggestions were close to right.
   screenshots:
     - label: Daily challenge
       desc: Snake mid-session with eaten fruit
@@ -300,8 +313,8 @@
       desc: Theme, accessibility, and notification options
       image: /assets/images/snake-settings-dark-desktop.png
     - label: Leaderboard
-      desc: Daily rankings with top scores
-      image: /assets/images/snake-leaderboard.jpg
+      desc: Daily rankings with real scores
+      image: /assets/images/snake-leaderboard-dark-desktop.png
 
 - id: skills
   num: "005"
@@ -376,3 +389,41 @@
       desc: Agent collecting requirements
     - label: Generated presentation
       desc: PRESENTASJON.html output
+
+- id: words-are-snake-devlog
+  num: "006"
+  name: Words Are Snake Devlog
+  tagline: Notes from Building a Word Game
+  desc: >
+    A developer blog following the making of Words Are Snake: the problems encountered, the tools used,
+    and what years of experimenting with generative AI coding tools taught along the way.
+  longDesc: >
+    The companion developer blog for Words Are Snake: a chronological account of shaping the game through
+    product decisions, production bugs, architectural changes, and an evolving collaboration with generative
+    AI coding tools.
+  accent: "#0f766e"
+  accentLight: "#14b8a6"
+  url: https://blog.wordsaresnake.no/
+  urlLabel: Visit the blog
+  companionProjectId: snake
+  tags:
+    - Developer blog
+    - Game development
+    - Generative AI
+  status: published
+  featuredPosts:
+    - title: Seven phases in one afternoon
+      url: https://blog.wordsaresnake.no/posts/the-beginning/
+    - title: Someone else's phone
+      url: https://blog.wordsaresnake.no/posts/surviving-the-first-deploy/
+    - title: The boring stack, on purpose
+      url: https://blog.wordsaresnake.no/posts/leaving-render-for-turso-railway/
+    - title: Showing the snake where it's about to go
+      url: https://blog.wordsaresnake.no/posts/word-preview/
+  screenshots:
+    - label: Blog index
+      desc: The publication index in dark mode
+      image: /assets/images/snake-blog-index-dark-desktop.png
+    - label: Reading experience
+      desc: An individual post in light mode
+      image: /assets/images/snake-blog-post-light-desktop.png
