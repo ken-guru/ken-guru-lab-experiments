@@ -57,6 +57,21 @@ layout: default
     {% endif %}
   </div>
 
+  <!-- FEATURED POSTS -->
+  {% if p.featuredPosts %}
+    <div class="section">
+      <div class="section-label">Featured posts</div>
+      <div class="feature-list-detail">
+        {% for post in p.featuredPosts %}
+          <div class="feature-item">
+            <span class="feature-item__dot"></span>
+            <a href="{{ post.url }}" target="_blank" rel="noopener noreferrer" class="feature-item__text feature-item__link">{{ post.title }}</a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
   <!-- SCREENSHOTS -->
   {% if p.screenshots %}
     <div class="section">

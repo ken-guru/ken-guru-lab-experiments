@@ -630,6 +630,17 @@ a {
   color: var(--text);
 }
 
+.feature-item__link {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  text-underline-offset: 4px;
+}
+
+.feature-item__link:hover {
+  color: var(--accent);
+  text-decoration-color: currentColor;
+}
+
 .stack-card {
   padding: 16px 20px;
   margin-bottom: 10px;

@@ -393,13 +393,14 @@
 - id: words-are-snake-devlog
   num: "006"
   name: Words Are Snake Devlog
-  tagline: Building a Word Game with AI
+  tagline: Notes from Building a Word Game
   desc: >
     A developer blog following the making of Words Are Snake: the problems encountered, the tools used,
     and what years of experimenting with generative AI coding tools taught along the way.
   longDesc: >
-    The companion developer blog for Words Are Snake. It documents how the game came to be, the challenges
-    met and overcome, and the evolving role generative AI coding tools played throughout its development.
+    The companion developer blog for Words Are Snake: a chronological account of shaping the game through
+    product decisions, production bugs, architectural changes, and an evolving collaboration with generative
+    AI coding tools.
   accent: "#0f766e"
   accentLight: "#14b8a6"
   url: https://blog.wordsaresnake.no/
@@ -410,3 +411,19 @@
     - Game development
     - Generative AI
   status: published
+  featuredPosts:
+    - title: Seven phases in one afternoon
+      url: https://blog.wordsaresnake.no/posts/the-beginning/
+    - title: Someone else's phone
+      url: https://blog.wordsaresnake.no/posts/surviving-the-first-deploy/
+    - title: The boring stack, on purpose
+      url: https://blog.wordsaresnake.no/posts/leaving-render-for-turso-railway/
+    - title: Showing the snake where it's about to go
+      url: https://blog.wordsaresnake.no/posts/word-preview/
+  screenshots:
+    - label: Blog index
+      desc: The publication index in dark mode
+      image: /assets/images/snake-blog-index-dark-desktop.png
+    - label: Reading experience
+      desc: An individual post in light mode
+      image: /assets/images/snake-blog-post-light-desktop.png
